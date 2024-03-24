@@ -1,0 +1,42 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Define the function
+def f(x, y):
+    return 1 - x * y * np.cos(np.pi * y)
+
+# Define the linear approximation function
+def L(x, y):
+    return (1 - np.cos(np.pi)) - np.cos(np.pi) * (x - 1) - (np.cos(np.pi) + np.pi * np.sin(np.pi)) * (y - 1)
+
+# Generate x and y data points
+x = np.linspace(0.8, 1.2, 100)
+y = np.linspace(0.8, 1.2, 100)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+# Plot the function
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('f(X, Y)')
+ax.set_title('Function f(X, Y)')
+plt.show()
+
+# Plot the tangent plane
+x = np.linspace(0.8, 1.2, 100)
+y = np.linspace(0.8, 1.2, 100)
+X, Y = np.meshgrid(x, y)
+Z_linear = L(X, Y)
+
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z_linear, color='r', alpha=0.6)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('L(X, Y)')
+ax.set_title('Tangent Plane at (1, 1)')
+plt.show()
